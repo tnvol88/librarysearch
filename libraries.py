@@ -6,7 +6,7 @@ from openpyxl.styles import Color, PatternFill, colors
 API_KEY = '' #Enter your key between quotes
 google_places = GooglePlaces(API_KEY)
 
-wb = load_workbook('library.xlsx')
+wb = load_workbook('library.xlsx') # replace with your filename
 ws = wb.active
 
 
