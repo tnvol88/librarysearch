@@ -1,9 +1,30 @@
+"""
+In order for this code to work, you will need to install the googleplaces and openpyxl libraries. I used pip to install both.
+You can find many tutorials on install each online. If you have questions, you can let me know. 
+
+-Openpyxl will not allow the excel file to be open while the program is running or it throw an error. 
+-You'll see as the program runs that I have search results printed to the console. I did for a couple reasons, one because
+the program takes a while to run and this provides feedback that it's continuing to function and also because you can see 
+how many results were returned in the search. 
+-Another functionality I want to add is the ability to also log results where more
+than 1 result is returned. Currently, I can't be sure that when multiple results are returned, Google is giving me the value I'm
+looking for. Their documentation shows that the results are ranked by prominence (a value calculated by Google).
+
+Googleplaces API:
+You will need to sign up to use google api services. The first level sign up includes 1000 queries. If you attach
+a credit card to the account, you will be permitted 150,000 queries. Google says you won't be charged for this level
+and it is just for verification. You can read more about that on the Googleplaces API page.
+
+You will need to edit code on lines 24,27, and 80 with your own information. I've left comments to the side of those lines
+exlaining what is needed.
+"""
+
 from googleplaces import GooglePlaces, types, lang
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Color, PatternFill, colors
 
 
-API_KEY = '' #Enter your key between quotes
+API_KEY = '' #Enter your key between quotes - key given after signing up for googleplaces api
 google_places = GooglePlaces(API_KEY)
 
 wb = load_workbook('library.xlsx') # replace with your filename
