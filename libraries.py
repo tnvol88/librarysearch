@@ -24,10 +24,10 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Color, PatternFill, colors
 
 
-API_KEY = '' #Enter your key between quotes - key given after signing up for googleplaces api
+API_KEY = '' #Enter your key between quotes
 google_places = GooglePlaces(API_KEY)
 
-wb = load_workbook('library.xlsx') # replace with your filename
+wb = load_workbook('library.xlsx')
 ws = wb.active
 
 
@@ -36,10 +36,15 @@ These variables are used to define fill colors
 for changing cell colors based on library search
 results
 """
-redFill = PatternFill('solid',fgColor='FF0000')
-greenFill = PatternFill('solid',fgColor='00FF00')
-yellowFill = PatternFill('solid',fgColor='FFFF00')
+redFill = PatternFill('solid',fgColor='FF0000') #Found one exact match and is closed
+greenFill = PatternFill('solid',fgColor='00FF00') #Found one exact match and is open
+yellowFill = PatternFill('solid',fgColor='FFFF00') #Did not find any matches
+cyanFill = PatternFill('solid',fgColor='00FFFF') #Found multiple results, none exact, is open
+magentaFill = PatternFill('solid',fgColor='FF00FF') #Found multiple results, none exact, is closed
 
+"""
+Set of list to show all library results at end of script
+"""
 not_found_libraries = []
 closed_libraries = []
 open_libraries = []
@@ -56,39 +61,58 @@ def checkIfClosed(library_name, row):
     query_result = google_places.nearby_search(
         location=str(ws.cell(row=row, column=9).value)+','+str(ws.cell(row=row,column=11).value), keyword=str(library_name),
         rankby='distance')
-    print('result: ', query_result)
+    print('Number of results found: ', len(query_result.places))
     if len(query_result.places)== 0:
         not_found_libraries.append(library_name)
+        print('no results found')
         return 'not found'
     else:
-        pass
-    for place in query_result.places:
-        print('place: ', place.name)
+        place, match = findBestResult(query_result.places, library_name)
         place.get_details()
         try:
             print(place.details['permanently_closed'])
             closed_libraries.append(place.name)
-            return False
+            return False, match
         except KeyError:
             open_libraries.append(place.name)
-            return True
+            return True, match
 
-
+def findBestResult(results, library_name):
+    """This function is used to choose best result when
+       more than one result is found. If none of the results
+       match the library name exactly, the most 'prominent'
+       result is returned. 'Prominence' is determined by Google's
+       alogrithms.
+    """
+    for place in results:
+        if str(place.name) == str(library_name):
+            return place, None
+        else:
+            print('searched for: ', library_name,)
+            print('found instead: ', place.name)
+            pass
+        print('did not find exact match, returning: ', results[0].name,'\n')
+        return results[0], 'notexact'  
 
 """
 The loop below loops through values in column F (col 6)
 and runs the above function using that value. Depending on the result
 of the function run, the cell color is changed.
 """
-for i in range(2,50): # change '40' to '4041' to run script on entire column
+for i in range(2,40): # first number (2) tells script to start on row2, second number tells to stop at row 39. Enter (2,4041) to run all rows.
     col = 6
     library = (ws.cell(row=i,column=col).value)
-    if checkIfClosed(library, i)== True:
+    values = checkIfClosed(library,i)
+    if values[0]==True and values[1]==None:
         ws.cell(row=i,column=col).fill=greenFill
-    elif checkIfClosed(library, i) == False:
+    elif values[0] == False and values[1]==None:
         ws.cell(row=i,column=col).fill=redFill
-    elif checkIfClosed(library, i) == 'not found':
+    elif values == 'not found':
         ws.cell(row=i, column=col).fill = yellowFill
+    elif values[0] == True and values[1] == 'notexact':
+        ws.cell(row=i, column=col).fill = cyanFill
+    elif values[0] == False and values[1] == 'notexact':
+        ws.cell(row=i, column=col).fill = magentaFill
 
 wb.save('library.xlsx') # saves changes to excel workbook
 
@@ -107,5 +131,3 @@ print('These libraries are permanently closed:')
 print(closed_libraries, '\n')
 print('These libraries are still open:')
 print(open_libraries)
-
-
