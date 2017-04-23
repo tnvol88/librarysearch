@@ -6,9 +6,7 @@ You can find many tutorials on install each online. If you have questions, you c
 -You'll see as the program runs that I have search results printed to the console. I did for a couple reasons, one because
 the program takes a while to run and this provides feedback that it's continuing to function and also because you can see 
 how many results were returned in the search. 
--Another functionality I want to add is the ability to also log results where more
-than 1 result is returned. Currently, I can't be sure that when multiple results are returned, Google is giving me the value I'm
-looking for. Their documentation shows that the results are ranked by prominence (a value calculated by Google).
+-Because of the number of Google searches, this code could take a while to run.
 
 Googleplaces API:
 You will need to sign up to use google api services. The first level sign up includes 1000 queries. If you attach
