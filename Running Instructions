@@ -1,0 +1,55 @@
+***** TO INSTALL PYTHON ******
+You will need to have Python3 installed. You can download the current version from here: https://www.python.org/downloads/
+This will also download an installer which will guide you through installing python.
+
+Once python is installed, navigate through your file explorer to find the path where Python was installed. For example mine is: 
+  C:/Python34. You need to know this in order to run the script.
+  
+  If you open the python folder, you will see a number of pre-installed folders already. I have created a new folder to keep the programs
+  I write in. I call this folder, "Programs". My new path for running scripts is now C:/Python34/Programs. Creating a folder just for 
+  new programs is completely optional, I just use it to stay organized better.
+  
+You'll notice inside your new python folder, there is a folder titled "Scripts". In this folder is a tool called 'pip' which allows for
+    easy installation of python libraries. The path for accessing pip in the command prompt will be the 'path to your pythonfolder'+/Scripts
+    for example: C:/Python34/Scripts
+  
+  
+***** TO SAVE SCRIPT *****
+Navigate through the following - Python installation folder -> Lib -> idlelib -> idle.pyw
+You now have the Python Idle Shell running. Select 'File' -> 'New File' to create a document
+Paste the code from github here and save to your desired location within the python installation folder
+
+
+***** TO DOWNLOAD PYTHON LIBRARIES NEEDED *****
+Open your command prompt (windows key+r and then type cmd on windows). Or you can search through your applications. Typically found under
+    accessories.
+    
+Change to python script directory using change directory command. for example I will type: cd C:/Python34/Scripts
+    You will need to type the path to your python scripts folder - This is case sensitive and errors will be thrown if cases do not match
+    the appropriate path. When successful, the prompt within the command prompt will change to reflect the python script directory.
+    Ex. C:\Python334\Scripts> "this is the area I woul type commands"
+    You might notice that when I use the cd command I utilize forward slashes while the command prompt shows paths with back slashes.
+        Either works, but back slashes have a special command in python and so I use forward slashes out of habit. You don't have to know
+        that to make this work, but don't want you to be confused by the mixed use of slashes.
+        
+To install googleplaces api library: 
+    here is a link to the library and additional installation instructions: https://github.com/slimkrazy/python-google-places
+    In your command prompt, type the following and then press enter: pip install python-google-places
+        You should see a bunch of installation processes begin. You may be asked to type 'y' at one point.
+        
+To install openpyxl:
+    type the following and press enter: pip install openpyxl
+
+
+***** FINAL STEPS *****
+In order for the script to find the excel file, it needs to be in the same path as the script itself. Copy/Paste or otherwise 
+    move the excel file to the same folder where you have the script saved.
+    
+    
+***** TO RUN SCRIPT *****
+In the command prompt, 'cd' to the path where the sript is saved (also where the excel file is saved). This is the path to the folder
+    where the items are located. For example I would type: cd C:/Python34/Programs
+
+Now type (without quotes) 'nameofscript.py' and press enter.
+
+
