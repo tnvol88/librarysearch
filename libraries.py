@@ -3,7 +3,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Color, PatternFill, colors
 
 
-API_KEY = '' #Enter your key between quotes
+API_KEY = 'AIzaSyDLdDH5kqx4-kYy3qlTpxjGc0KEVD9orN4' #Enter your key between quotes
 google_places = GooglePlaces(API_KEY)
 
 wb = load_workbook('library.xlsx')
@@ -37,6 +37,7 @@ def checkIfClosed(library_name, row):
             'True': if library is still open
     """
     row = row
+    print('Checking row ', row)
     query_result = google_places.nearby_search(
         location=str(ws.cell(row=row, column=9).value)+','+str(ws.cell(row=row,column=11).value),
         keyword=str(library_name)+' '+str(ws.cell(row=row, column=9).value),
@@ -58,7 +59,7 @@ def checkIfClosed(library_name, row):
         address_from_excel = str(ws.cell(row=row, column =7).value).strip()
         try:
             _ = (place.details['permanently_closed'])
-            closed_dict[libary_name]={'found':place.name, 'address from Google':place.formatted_address,
+            closed_dict[library_name]={'found':place.name, 'address from Google':place.formatted_address,
                                       'address from Excel':address_from_excel
                                       }
             return 'Closed', match
@@ -74,6 +75,7 @@ def findBestResult(results, library_name, row):
         match, no result is returned.
     """
     row = row
+    count = 0
     for place in results:
         address_from_excel = str(ws.cell(row=row, column =7).value).strip()
         place.get_details()
@@ -85,6 +87,9 @@ def findBestResult(results, library_name, row):
                                         'address from Excel': address_from_excel
                                         }
             return place, 'notexact'
+        else:
+            count += 1
+            pass
     not_found_libraries[library_name]={'found: ':'None', 'address from Google':place.formatted_address,
                                                'address from Excel':address_from_excel
                                                }
@@ -103,10 +108,11 @@ def addressCheck(address, row):
     return address == address_from_excel
 
 def addressChange(address):
-    abbreviations = {'St':'Street', 'Rd':'Road', 'Ave':'Avenue',
-                     'Dr':'Drive', 'N':'North', 'S':'South',
-                     'E':'East', 'W':'West', 'Ln':'Lane'
+    abbreviations = {'st':'street', 'rd':'road', 'ave':'avenue',
+                     'dr':'drive', 'n':'north', 's':'south',
+                     'e':'east', 'w':'west', 'ln':'lane'
                      }
+    address = address.lower()
     try:
         address = address[:address.index(',')]
     except ValueError:
@@ -126,7 +132,7 @@ The loop below loops through values in column F (col 6)
 and runs the above function using that value. Depending on the result
 of the function run, the cell color is changed.
 """
-for i in range(46,47): # change '40' to '4041' to run script on entire column
+for i in range(2,25): # change '40' to '4041' to run script on entire column
     col = 6
     library = (ws.cell(row=i,column=col).value)
     values = checkIfClosed(library,i)
