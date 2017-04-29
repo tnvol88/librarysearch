@@ -3,7 +3,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Color, PatternFill, colors
 
 
-API_KEY = 'AIzaSyDLdDH5kqx4-kYy3qlTpxjGc0KEVD9orN4' #Enter your key between quotes
+API_KEY = '' #Enter your key between quotes
 google_places = GooglePlaces(API_KEY)
 
 wb = load_workbook('library.xlsx')
