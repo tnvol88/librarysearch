@@ -42,7 +42,6 @@ def checkIfClosed(library_name, row):
         keyword=str(library_name)+' '+str(ws.cell(row=row, column=9).value),
         rankby='distance')
     if len(query_result.places)== 0:
-        print('len results: ', len(query_result.places))
         not_found_libraries[library_name]={'found':'None', 'address from Google':'None',
                                            'address from Excel':str(ws.cell(row=row, column=7).value.strip())
                                            }
