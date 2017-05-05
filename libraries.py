@@ -139,6 +139,8 @@ def changenumber(number):
     return ''.join(correctednumber)
 
 def numberCheck(excelnumber, googlenumber):
+    if excelnumber and googlenumber == 'None':
+        return False
     excelnumber = changenumber(excelnumber)
     googlenumber = changenumber(googlenumber)
     if googlenumber in excelnumber:
