@@ -1,3 +1,4 @@
+
 from googleplaces import GooglePlaces, types, lang
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Color, PatternFill, colors
@@ -139,7 +140,11 @@ def changenumber(number):
     return ''.join(correctednumber)
 
 def numberCheck(excelnumber, googlenumber):
-    if excelnumber and googlenumber == 'None':
+    print(excelnumber)
+    print(googlenumber)
+    print(excelnumber and googlenumber)
+    test = excelnumber and googlenumber
+    if test == None:
         return False
     excelnumber = changenumber(excelnumber)
     googlenumber = changenumber(googlenumber)
@@ -154,7 +159,7 @@ The loop below loops through values in column F (col 6)
 and runs the above function using that value. Depending on the result
 of the function run, the cell color is changed.
 """
-for i in range(500,550): # change '40' to '4041' to run script on entire column
+for i in range(500,505): # change '40' to '4041' to run script on entire column
     col = 6
     library = (ws.cell(row=i,column=col).value)
     values = checkIfClosed(library,i)
@@ -216,5 +221,3 @@ for k in same_number:
     print('address from Google: ', same_number[k]['address from Google'])
     print('address from Excel: ', same_number[k]['address from Excel'])
     print('\n')
-
-
